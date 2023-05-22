@@ -3,33 +3,17 @@ package com.example.listedinternship
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.listedinternship.apiRequest.GetService
-import com.example.listedinternship.apiRequest.ListedApiResponse
 import com.example.listedinternship.dashboard.DashBoardScreen
 import com.example.listedinternship.ui.theme.ListedInternshipTheme
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Response
+import com.example.listedinternship.viewmodel.ListedViewModel
 
 class MainActivity : ComponentActivity() {
+    private val dataViewModel by viewModels<ListedViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,55 +23,32 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DashBoardScreen()
+                    val viewModel = ListedViewModel()
+                    DashBoardScreen(dataViewModel)
                 }
             }
         }
     }
-}
-
-
-//@OptIn(DelicateCoroutinesApi::class)
-//@Composable
-//fun Greeting() {
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        val apiResponse = remember { mutableStateOf("") }
+//    private fun makeApiRequest() {
+//        GetService().getApiInterface().getDashboardData()
+//            .enqueue(object : retrofit2.Callback<ListedApiResponse> {
+//                override fun onResponse(
+//                    call: Call<ListedApiResponse>,
+//                    response: Response<ListedApiResponse>
+//                ) {
+//                    println("Response: ${response.body()}")
+//                    println("Response: ${response.raw()}")
+//                }
 //
-//        Button(
-//            onClick = {
+//                override fun onFailure(call: Call<ListedApiResponse>, t: Throwable) {
+//                    println( "Error: ${t.message}")
+//                    println(t.message)
+//                }
 //
-//                makeApiRequest()
+//            })
 //
-//            },
-//            modifier = Modifier.padding(16.dp)
-//        ) {
-//            Text(text = "Make API Request")
-//        }
-//
-//        Text(text = apiResponse.value)
 //    }
-//
-//}
-
-private fun makeApiRequest() {
-    GetService().getApiInterface().getDashboardData()
-        .enqueue(object : retrofit2.Callback<ListedApiResponse> {
-            override fun onResponse(
-                call: Call<ListedApiResponse>,
-                response: Response<ListedApiResponse>
-            ) {
-                println("Response: ${response.body()}")
-                println("Response: ${response.raw()}")
-            }
-
-            override fun onFailure(call: Call<ListedApiResponse>, t: Throwable) {
-                println(t.message)
-            }
-
-        })
-
 }
+
+
+

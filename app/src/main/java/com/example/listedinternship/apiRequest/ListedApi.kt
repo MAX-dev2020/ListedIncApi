@@ -5,7 +5,7 @@ data class ListedApiResponse(
     val statusCode: Int,
     val message: String,
     val support_whatsapp_number: String,
-    val extra_income: Int,
+    val extra_income: Double,
     val total_links: Int,
     val total_clicks: Int,
     val today_clicks: Int,

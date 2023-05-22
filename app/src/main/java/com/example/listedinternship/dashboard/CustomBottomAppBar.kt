@@ -1,135 +1,187 @@
 package com.example.listedinternship.dashboard
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.listedinternship.R
 
 @Composable
 fun CustomBottomAppBar() {
+    var isLinkClicked by remember { mutableStateOf(true) }
+    var isCoursesClicked by remember { mutableStateOf(false) }
+    var isCampaignsClicked by remember { mutableStateOf(false) }
+    var isProfileClicked by remember { mutableStateOf(false) }
 
     BottomAppBar(
         containerColor = Color.White,
-
-        ) {
+    ) {
         IconButton(
-            onClick = { /* Handle link button click */ },
-            modifier = Modifier.padding(start = 16.dp)
+            onClick = { isLinkClicked = true; isCoursesClicked = false; isCampaignsClicked = false; isProfileClicked = false },
+            modifier = Modifier.aspectRatio(1f)
         ) {
-            Column{
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.link),
                     contentDescription = "Link",
-                    tint = Color.Black
+                    tint = if (isLinkClicked) Color.Black else Color(0xFF999CA0)
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = "Links",
                     style = MaterialTheme.typography.displaySmall,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    color = if (isLinkClicked) Color.Black else Color(0xFF999CA0),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
+
         IconButton(
-            onClick = { /* Handle campaigns button click */ },
-            modifier = Modifier.padding(end = 16.dp)
+            onClick = {
+                isLinkClicked = false;
+                isCoursesClicked = true;
+                isCampaignsClicked = false;
+                isProfileClicked = false
+            },
+            modifier = Modifier.aspectRatio(1f)
         ) {
-            Column{
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.magazine),
                     contentDescription = "Link",
-                    tint = Color.Black
+                    tint = if (isCoursesClicked) Color.Black else Color(0xFF999CA0)
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = "Courses",
                     style = MaterialTheme.typography.displaySmall,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    color = if (isCoursesClicked) Color.Black else Color(0xFF999CA0),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
         }
 
+       Spacer(modifier = Modifier.weight(1f))
 
-        Box(
+        ElevatedButton(onClick = {
+        },
             modifier = Modifier
-                .size(56.dp)
-                .clip(CircleShape)
-                .background(Color(0xFF0E6FFF))
-                .clickable { /* Handle middle button click */ },
-            contentAlignment = Alignment.Center
-        ) {
+                .size(60.dp)
+                .clip(CircleShape),
+                colors = ButtonDefaults.elevatedButtonColors(
+                    containerColor = Color(0xFF0E6FFF),
+                )) {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = "Plus",
+                contentDescription = "Add",
                 tint = Color.White,
-                modifier = Modifier.size(32.dp)
+                modifier = Modifier.size(50.dp)
             )
-        }
-
-        IconButton(
-            onClick = { /* Handle campaigns button click */ },
-            modifier = Modifier.padding(start = 16.dp)
-        ) {
-            Column{
-                Icon(
-                    painter = painterResource(id = R.drawable.fast_forward),
-                    contentDescription = "Link",
-                    tint = Color.Black,
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = "Links",
-                    style = MaterialTheme.typography.displaySmall,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
-                )
-            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
         IconButton(
-            onClick = { /* Handle profile button click */ },
-            modifier = Modifier.padding(end = 8.dp)
+            onClick = {
+                isLinkClicked = false;
+                isCoursesClicked = false;
+                isCampaignsClicked = true;
+                isProfileClicked = false
+            },
+            modifier = Modifier
+                .padding(horizontal = 4.dp)
+                .aspectRatio(1f)
         ) {
-            Column{
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.fast_forward),
+                    contentDescription = "Link",
+                    tint = if (isCampaignsClicked) Color.Black else Color(0xFF999CA0),
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = "Campaigns",
+                    style = MaterialTheme.typography.displaySmall,
+                    color = if (isCampaignsClicked) Color.Black else Color(0xFF999CA0),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+        }
+
+
+        IconButton(
+            onClick = {
+                isLinkClicked = false;
+                isCoursesClicked = false;
+                isCampaignsClicked = false;
+                isProfileClicked = true
+            },
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .aspectRatio(1f)
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.user),
                     contentDescription = "Link",
-                    tint = Color.Black
+                    tint = if (isProfileClicked) Color.Black else Color(0xFF999CA0)
                 )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.padding(4.dp))
                 Text(
-                    text = "Links",
+                    text = "Profile",
                     style = MaterialTheme.typography.displaySmall,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    color = if (isProfileClicked) Color.Black else Color(0xFF999CA0),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
             }
         }
