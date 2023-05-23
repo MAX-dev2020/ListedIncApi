@@ -20,7 +20,7 @@ data class ListedApiResponse(
 data class ApiData(
     val recent_links: List<Link>,
     val top_links: List<Link>,
-    val overall_url_chart: Map<String, Int>
+    val overall_url_chart: Map<String, Int>,
 )
 
 data class Link(

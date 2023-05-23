@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.listedinternship.R
 import com.example.listedinternship.viewmodel.ListedViewModel
+import java.util.Calendar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +56,14 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
 
     val topLinks = viewModel.topLinks.collectAsState()
     val recentLinks = viewModel.recentLinks.collectAsState()
+    val dashBoardData = viewModel.dashboardData.collectAsState()
+    val chartData = viewModel.chartData.collectAsState()
+
+    val greeting = when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
+        in 0..11 -> "Good morning"
+        in 12..16 -> "Good afternoon"
+        else -> "Good evening"
+    }
 
     LaunchedEffect(Unit){
         viewModel.makeApiRequest()
@@ -116,7 +125,7 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                 Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 30.dp)) {
                     Column {
                         Text(
-                            text = "Good Morning",
+                            text = greeting,
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF999CA0)
                         )
@@ -137,8 +146,8 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                     .padding(start = 10.dp, top = 5.dp)
                             )
                         }
-                        ChartScreen()
-                        DataAnalyticsScreen()
+                        ChartScreen(chartData)
+                        DataAnalyticsScreen(dashBoardData)
 
                         Button(
                             onClick = { /* Handle button click */ },

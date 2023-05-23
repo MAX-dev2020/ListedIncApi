@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -113,10 +114,9 @@ fun CustomBottomAppBar() {
                     containerColor = Color(0xFF0E6FFF),
                 )) {
             Icon(
-                imageVector = Icons.Default.Add,
+                painter = painterResource(id = R.drawable.plus),
                 contentDescription = "Add",
                 tint = Color.White,
-                modifier = Modifier.size(50.dp)
             )
         }
 
