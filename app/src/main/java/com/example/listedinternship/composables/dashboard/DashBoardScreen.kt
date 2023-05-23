@@ -1,9 +1,8 @@
-package com.example.listedinternship.dashboard
+package com.example.listedinternship.composables.dashboard
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -21,13 +20,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -36,6 +33,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,18 +44,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.listedinternship.R
+import com.example.listedinternship.apiRequest.Link
+import com.example.listedinternship.apiRequest.ListedApiResponse
 import com.example.listedinternship.viewmodel.ListedViewModel
 import java.util.Calendar
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DashBoardScreen(viewModel: ListedViewModel) {
+fun DashBoardScreen(
+    topLinks: State<List<Link>>,
+    recentLinks:  State<List<Link>>,
+    dashBoardData:  State<ListedApiResponse?>,
+    chartData:  State<Map<String, Int>?>
+) {
 
-    val topLinks = viewModel.topLinks.collectAsState()
-    val recentLinks = viewModel.recentLinks.collectAsState()
-    val dashBoardData = viewModel.dashboardData.collectAsState()
-    val chartData = viewModel.chartData.collectAsState()
 
     val greeting = when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
         in 0..11 -> "Good morning"
@@ -65,9 +66,7 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
         else -> "Good evening"
     }
 
-    LaunchedEffect(Unit){
-        viewModel.makeApiRequest()
-    }
+
     val selectedTab = remember { mutableStateOf(0) }
     Scaffold(
         containerColor = Color(0xFF0E6FFF),
@@ -103,8 +102,7 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                     titleContentColor = Color.White
                 ),
             )
-        },
-        bottomBar = { CustomBottomAppBar() }
+        }
     ) {
         Card(
             modifier = Modifier
@@ -191,7 +189,7 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                     )
                                 },
 
-                            ) {
+                                ) {
                                 Text(
                                     text = "Top Links", style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold
@@ -232,7 +230,7 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                     contentColor = Color.Black,
                                     containerColor = Color.Transparent
                                 ),
-                                ) {
+                            ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.search),
                                     contentDescription = "search",
@@ -263,7 +261,8 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                 .fillMaxWidth()
                                 .requiredHeight(200.dp)
                         ) {
-                            Button(onClick = { /*TODO*/ },
+                            Button(
+                                onClick = { /*TODO*/ },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .requiredHeight(64.dp),
@@ -272,7 +271,8 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                     contentColor = Color.Black
                                 ),
                                 shape = RoundedCornerShape(6.dp),
-                                border = BorderStroke(1.dp, Color(0x524AD15F))) {
+                                border = BorderStroke(1.dp, Color(0x524AD15F))
+                            ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.whatsapp),
                                     contentDescription = "chat",
@@ -281,14 +281,19 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                         .padding(end = 5.dp),
                                     tint = Color(0xFF4AD15F)
                                 )
-                                Text(text = "Talk with us", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                Text(
+                                    text = "Talk with us",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
                                 Spacer(modifier = Modifier.weight(1f))
                             }
 
                             Spacer(modifier = Modifier.padding(top = 10.dp))
 
                             // Display button to add new link
-                            Button(onClick = { /*TODO*/ },
+                            Button(
+                                onClick = { /*TODO*/ },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .requiredHeight(64.dp),
@@ -297,7 +302,8 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                     contentColor = Color.Black
                                 ),
                                 shape = RoundedCornerShape(6.dp),
-                                border = BorderStroke(1.dp, Color(0x520E6FFF))) {
+                                border = BorderStroke(1.dp, Color(0x520E6FFF))
+                            ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.question_mark),
                                     contentDescription = "question_mark",
@@ -306,7 +312,11 @@ fun DashBoardScreen(viewModel: ListedViewModel) {
                                         .padding(end = 5.dp),
                                     tint = Color(0xFF0E6FFF)
                                 )
-                                Text(text = "Frequently Asked Questions", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                                Text(
+                                    text = "Frequently Asked Questions",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
                                 Spacer(modifier = Modifier.weight(1f))
                             }
                         }

@@ -1,4 +1,4 @@
-package com.example.listedinternship.dashboard
+package com.example.listedinternship.composables.dashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll

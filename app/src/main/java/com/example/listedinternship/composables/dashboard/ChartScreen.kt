@@ -1,4 +1,4 @@
-package com.example.listedinternship.dashboard
+package com.example.listedinternship.composables.dashboard
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,59 +37,73 @@ fun ChartScreen(overallChart: State<Map<String, Int>?>) {
     val lastDate = overallChart.value?.keys?.lastOrNull()
     val formattedDateRange = buildDateRangeString(firstDate, lastDate)
     println("overallChart: $overallChart")
-    Card(
-        modifier = Modifier
-            .padding(top = 30.dp)
-            .aspectRatio(1.5f),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White,
-        ),
-    ) {
-        Row{
-            Text(text = "Overview",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF999CA0),
-                modifier = Modifier.padding(20.dp))
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(onClick = { /*TODO*/ },
-                modifier = Modifier.padding(top = 10.dp,  end = 20.dp),
-            shape = RoundedCornerShape(10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
-                contentColor = Color(0xFF999CA0)
-            ), border = BorderStroke(1.dp, Color(0x14000000))
-            ) {
-                Text(text = formattedDateRange,
-                    style = MaterialTheme.typography.titleSmall,
-                    color = Color.Black)
-
-                Icon(painter = painterResource(id = R.drawable.clock),
-                    contentDescription = "clock",
-                modifier = Modifier.padding(start = 20.dp))
-            }
-        }
-
-        Box(
+    if (overallChart.value == null) {
+        // Show progress indicator
+        CircularProgressIndicator(
+            color = Color(0xFF0E6FFF),
+        )
+    } else {
+        Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(360.dp)
-                .padding(16.dp),
+                .padding(top = 30.dp)
+                .aspectRatio(1.5f),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White,
+            ),
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .wrapContentSize(align = Alignment.BottomStart)
-            ) {
-                LinearChart(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    data = provideMockData(overallChart.value),
-                    style = LinearChartStyle.Default,
-                    dates = provideMockDates(overallChart.value),
+            Row {
+                Text(
+                    text = "Overview",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color(0xFF999CA0),
+                    modifier = Modifier.padding(20.dp)
                 )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.padding(top = 10.dp, end = 20.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color(0xFF999CA0)
+                    ), border = BorderStroke(1.dp, Color(0x14000000))
+                ) {
+                    Text(
+                        text = formattedDateRange,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = Color.Black
+                    )
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.clock),
+                        contentDescription = "clock",
+                        modifier = Modifier.padding(start = 20.dp)
+                    )
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(360.dp)
+                    .padding(16.dp),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .wrapContentSize(align = Alignment.BottomStart)
+                ) {
+                    LinearChart(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        data = provideMockData(overallChart.value),
+                        style = LinearChartStyle.Default,
+                        dates = provideMockDates(overallChart.value),
+                    )
+                }
             }
         }
     }

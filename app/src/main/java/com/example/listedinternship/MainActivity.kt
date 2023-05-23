@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.listedinternship.dashboard.DashBoardScreen
+import com.example.listedinternship.composables.MainScreen
+import com.example.listedinternship.composables.dashboard.DashBoardScreen
 import com.example.listedinternship.ui.theme.ListedInternshipTheme
 import com.example.listedinternship.viewmodel.ListedViewModel
 
@@ -23,8 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel = ListedViewModel()
-                    DashBoardScreen(dataViewModel)
+                    MainScreen(dataViewModel)
                 }
             }
         }

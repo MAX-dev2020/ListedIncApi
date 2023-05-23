@@ -2,6 +2,7 @@ package com.example.listedinternship.viewmodel
 
 
 import androidx.lifecycle.ViewModel
+import com.example.listedinternship.MyApplication
 import com.example.listedinternship.apiRequest.GetService
 import com.example.listedinternship.apiRequest.Link
 import com.example.listedinternship.apiRequest.ListedApiResponse
@@ -22,8 +23,9 @@ class ListedViewModel : ViewModel(){
     val recentLinks: MutableStateFlow<List<Link>> = _recentLinks
     val chartData: MutableStateFlow<Map<String, Int>?> = _chartData
 
-    fun makeApiRequest() {
-        GetService().getApiInterface().getDashboardData()
+
+    fun makeApiRequest(apiEndpoint: String) {
+        GetService().getApiInterface("https://api.inopenapp.com", MyApplication.getToken()).getDashboardData(apiEndpoint)
             .enqueue(object : Callback<ListedApiResponse> {
                 override fun onResponse(
                     call: Call<ListedApiResponse>,
