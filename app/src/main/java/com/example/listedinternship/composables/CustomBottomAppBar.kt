@@ -36,6 +36,7 @@ fun CustomBottomAppBar(
     onCampaignsClicked: () -> Unit,
     onProfileClicked: () -> Unit
 ) {
+
     var isLinkClicked by remember { mutableStateOf(true) }
     var isCoursesClicked by remember { mutableStateOf(false) }
     var isCampaignsClicked by remember { mutableStateOf(false) }
@@ -71,9 +72,9 @@ fun CustomBottomAppBar(
 
         IconButton(
             onClick = {
-                isLinkClicked = false;
-                isCoursesClicked = true;
-                isCampaignsClicked = false;
+                isLinkClicked = false
+                isCoursesClicked = true
+                isCampaignsClicked = false
                 isProfileClicked = false
             },
             modifier = Modifier.aspectRatio(1f)
@@ -120,9 +121,9 @@ fun CustomBottomAppBar(
 
         IconButton(
             onClick = {
-                isLinkClicked = false;
-                isCoursesClicked = false;
-                isCampaignsClicked = true;
+                isLinkClicked = false
+                isCoursesClicked = false
+                isCampaignsClicked = true
                 isProfileClicked = false
             },
             modifier = Modifier
@@ -153,9 +154,9 @@ fun CustomBottomAppBar(
 
         IconButton(
             onClick = {
-                isLinkClicked = false;
-                isCoursesClicked = false;
-                isCampaignsClicked = false;
+                isLinkClicked = false
+                isCoursesClicked = false
+                isCampaignsClicked = false
                 isProfileClicked = true
             },
             modifier = Modifier

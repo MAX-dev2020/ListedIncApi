@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,9 +29,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.listedinternship.R
@@ -39,6 +45,7 @@ import com.example.listedinternship.components.formatTime
 
 @Composable
 fun RecentLinksList(recentLinks: State<List<Link>>) {
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
     if (recentLinks.value.isEmpty()) {
         // Show progress indicator
         CircularProgressIndicator(
@@ -46,6 +53,11 @@ fun RecentLinksList(recentLinks: State<List<Link>>) {
         )
     } else {
         repeat(recentLinks.value.size) {
+            val annotatedString = buildAnnotatedString {
+                withStyle(style = SpanStyle(color = Color.Red)) {
+                    append(recentLinks.value[it].web_link)
+                }
+            }
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -136,12 +148,16 @@ fun RecentLinksList(recentLinks: State<List<Link>>) {
                             maxLines = 1
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        Icon(
-                            painter = painterResource(id = R.drawable.copy),
-                            contentDescription = "Copy",
-                            tint = Color(0xFF0E6FFF),
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
+                        IconButton(onClick = {
+                            clipboardManager.setText(annotatedString)
+                        }, modifier = Modifier.size(24.dp)) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.copy),
+                                contentDescription = "Copy",
+                                tint = Color(0xFF0E6FFF),
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
                     }
                 }
             }

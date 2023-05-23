@@ -59,15 +59,14 @@ fun DashBoardScreen(
     chartData:  State<Map<String, Int>?>
 ) {
 
-
     val greeting = when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
         in 0..11 -> "Good morning"
         in 12..16 -> "Good afternoon"
         else -> "Good evening"
     }
 
-
     val selectedTab = remember { mutableStateOf(0) }
+
     Scaffold(
         containerColor = Color(0xFF0E6FFF),
         topBar = {
@@ -127,7 +126,7 @@ fun DashBoardScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF999CA0)
                         )
-                        Row() {
+                        Row{
                             Text(
                                 text = "Monish V",
                                 style = MaterialTheme.typography.bodyLarge,
@@ -144,8 +143,10 @@ fun DashBoardScreen(
                                     .padding(start = 10.dp, top = 5.dp)
                             )
                         }
-                        ChartScreen(chartData)
-                        DataAnalyticsScreen(dashBoardData)
+
+                        Chart(chartData)
+
+                        DataAnalytics(dashBoardData)
 
                         Button(
                             onClick = { /* Handle button click */ },

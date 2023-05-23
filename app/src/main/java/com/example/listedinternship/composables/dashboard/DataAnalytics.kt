@@ -23,8 +23,7 @@ import com.example.listedinternship.R
 import com.example.listedinternship.apiRequest.ListedApiResponse
 
 @Composable
-fun DataAnalyticsScreen(dashBoardData: State<ListedApiResponse?>) {
-
+fun DataAnalytics(dashBoardData: State<ListedApiResponse?>) {
     Row(
         modifier = Modifier
             .padding(top = 20.dp)

@@ -29,25 +29,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-//    private fun makeApiRequest() {
-//        GetService().getApiInterface().getDashboardData()
-//            .enqueue(object : retrofit2.Callback<ListedApiResponse> {
-//                override fun onResponse(
-//                    call: Call<ListedApiResponse>,
-//                    response: Response<ListedApiResponse>
-//                ) {
-//                    println("Response: ${response.body()}")
-//                    println("Response: ${response.raw()}")
-//                }
-//
-//                override fun onFailure(call: Call<ListedApiResponse>, t: Throwable) {
-//                    println( "Error: ${t.message}")
-//                    println(t.message)
-//                }
-//
-//            })
-//
-//    }
 }
 
 

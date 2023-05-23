@@ -52,7 +52,6 @@ fun TopLinksList(topLinks: State<List<Link>>) {
         )
     } else {
         repeat(topLinks.value.size) {
-
             val annotatedString = buildAnnotatedString {
                 withStyle(style = SpanStyle(color = Color.Red)) {
                     append(topLinks.value[it].web_link)

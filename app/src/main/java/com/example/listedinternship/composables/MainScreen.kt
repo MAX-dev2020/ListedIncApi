@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.listedinternship.composables.campaings.Campaigns
+import com.example.listedinternship.composables.campaigns.Campaigns
 import com.example.listedinternship.composables.courses.Courses
 import com.example.listedinternship.composables.dashboard.DashBoardScreen
 import com.example.listedinternship.composables.profile.Profile
@@ -21,7 +21,6 @@ import com.example.listedinternship.viewmodel.ListedViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
 fun MainScreen(viewModel: ListedViewModel) {
     var dashBoardScreen by  remember {
         mutableStateOf(true)
@@ -40,6 +39,7 @@ fun MainScreen(viewModel: ListedViewModel) {
     val recentLinks = viewModel.recentLinks.collectAsState()
     val dashBoardData = viewModel.dashboardData.collectAsState()
     val chartData = viewModel.chartData.collectAsState()
+
     LaunchedEffect(Unit){
         viewModel.makeApiRequest("api/v1/dashboardNew")
     }

@@ -1,4 +1,4 @@
-package com.example.listedinternship.composables.campaings
+package com.example.listedinternship.composables.campaigns
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

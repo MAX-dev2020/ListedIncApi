@@ -12,6 +12,7 @@ import com.example.listedinternship.R
 val figtree = FontFamily(
     Font(R.font.figtree_regular)
 )
+
 val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = figtree,

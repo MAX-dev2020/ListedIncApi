@@ -26,13 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.listedinternship.LinearChart
-import com.example.listedinternship.LinearChartStyle
 import com.example.listedinternship.R
 import java.time.Month
 
 @Composable
-fun ChartScreen(overallChart: State<Map<String, Int>?>) {
+fun Chart(overallChart: State<Map<String, Int>?>) {
     val firstDate = overallChart.value?.keys?.firstOrNull()
     val lastDate = overallChart.value?.keys?.lastOrNull()
     val formattedDateRange = buildDateRangeString(firstDate, lastDate)
